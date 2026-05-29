@@ -1,5 +1,7 @@
 import express from 'express';
-import PptxGenJS from 'pptxgenjs';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const PptxGenJS = require('pptxgenjs');
 import { prisma } from '../index.js';
 import fs from 'fs';
 import path from 'path';
