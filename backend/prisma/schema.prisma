@@ -1,0 +1,110 @@
+// backend/prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Model untuk operator multimedia
+model Operator {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+}
+
+// Model untuk jadwal ibadah
+model Schedule {
+  id        String   @id @default(uuid())
+  name      String
+  shift     String   @default("Ibadah (09:00-11:00)")
+  date      DateTime
+  notes     String?  @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+// Model untuk Multimedia Staff (Jadwal)
+model MultimediaStaff {
+  id        String   @id @default(uuid())
+  name      String
+  role      String
+  shift     String
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Model untuk Liturgi
+model Liturgy {
+  id        String   @id @default(uuid())
+  title     String
+  theme     String?
+  churchDay String?
+  date      DateTime
+  content   String   // Store as JSON string
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Model untuk Template Liturgi Kustom
+model LiturgyTemplate {
+  id        String   @id @default(uuid())
+  title     String
+  theme     String?
+  churchDay String?
+  content   String   // Store as JSON string
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Model untuk Lagu
+model Song {
+  id        String   @id @default(uuid())
+  number    Int      @unique
+  title     String
+  lyrics    String
+  songBook  String?
+  author    String?
+  category  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Model untuk Proyek PPT
+model PPTProject {
+  id            String   @id @default(uuid())
+  title         String
+  churchDay     String?
+  date          DateTime
+  theme         String?
+  slides        String   // Store as JSON string
+  selectedSongs String   // Store as JSON string
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// Model untuk Kalender Gerejawi
+model ChurchCalendar {
+  id          String   @id
+  name        String
+  date        DateTime
+  description String?
+  color       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Model untuk Autentikasi User
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
